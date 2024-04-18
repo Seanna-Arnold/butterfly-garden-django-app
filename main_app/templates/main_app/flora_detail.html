@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Flora Details</h1>
+
+<div class="row">
+  <div class="col s6 col-offset-3">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{ flora.name }}</span>
+        <p>Color: {{ flora.color }}</p>
+      </div>
+      <div class="card-action">
+        <a href="{% url 'floras_update' flora.id %}">Edit</a>
+        <a href="{% url 'floras_delete' flora.id %}">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

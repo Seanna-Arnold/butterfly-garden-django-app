@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Butterfly Details</h1>
+<div class="row">
+  <div class="col s6">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{ butterfly.name }}</span>
+        <p>Scientific Name: {{ butterfly.scientific }}</p>
+        <p>Description: {{ butterfly.description|linebreaks }}</p>
+        <p>Amount: {{ butterfly.size }}</p>
+      </div>
+      <div class="card-action">
+        <a href="{% url 'butterflies_update' butterfly.id %}">Edit</a>
+        <a href="{% url 'butterflies_delete' butterfly.id %}">Delete</a>
+      </div>
+    </div>
+  </div>
+  <div class="col s6">
+    <form method="POST" action="{% url 'add_cycle' butterfly.id %}">
+      {% csrf_token %}
+      
+      {{ cycle_form.as_p }}
+      <input type="submit" class="btn" value="Add Cycle">
+    </form>
+    <table class="striped">
+      <thead>
+        <tr><th>Date</th><th>Cycle</th></tr>
+      </thead>
+      <tbody>
+        {% for cycle in butterfly.cycle_set.all %}
+          <tr>
+            <td>{{cycle.date}}</td>
+            <td>{{cycle.get_cycle_display}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<hr>
+<div class="row">
+  <div class="col s6">
+    <h3>{{ butterfly.name }}'s Floras</h3>
+    {% if butterfly.floras.count %}
+      {% for flora in butterfly.floras.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              <span style="color: {{ flora.color }}">{{ flora.color }}</span> {{ flora.name }}
+            </span>
+          </div>
+          <div class="card-action">
+            <form action="{% url 'unassoc_flora' butterfly.id flora.id %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="btn">Remove</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>No Floras 🌻</h5>
+    {% endif %}
+  </div>
+  <!-- Available toys will come after this line -->
+  <div class="col s6">
+    <h3>Available Floras</h3>
+    {% if floras.count %}
+      {% for flora in floras.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              A <span style="color: {{ flora.color }}">{{ flora.color }}</span> {{ flora.name }}
+            </span>
+          </div>
+          <div class="card-action">
+            <form action="{% url 'assoc_flora' butterfly.id flora.id %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="btn">Add</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>{{butterfly.name}} Already Has All Toys Available</h5>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  const dateEl = document.getElementById('id_date');
+  // M is Materialize's global variable
+  M.Datepicker.init(dateEl, {
+    format: 'yyyy-mm-dd',
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoClose: true
+  });
+  const selectEl = document.getElementById('id_cycle');
+  M.FormSelect.init(selectEl);
+</script>
+
+{% endblock %}

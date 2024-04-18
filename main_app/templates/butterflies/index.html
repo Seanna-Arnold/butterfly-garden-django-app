@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Butterfly List</h1>
+
+{% for butterfly in butterflies %}
+  <a href="{% url 'detail' butterfly.id %}">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{ butterfly.name }}</span>
+        <p>Scientific Name: {{ butterfly.scientific }}</p>
+        <p>Description: {{ butterfly.description|linebreaks }}</p>
+        <p>Amount: {{ butterfly.size }}</p>
+      </div>
+    </div>
+  </a>
+{% endfor %}
+
+{% endblock %}

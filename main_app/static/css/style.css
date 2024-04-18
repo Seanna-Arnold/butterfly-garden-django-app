@@ -1,0 +1,56 @@
+body {
+
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    font-family: "Montserrat", sans-serif;
+    color: #70587C;
+    letter-spacing: 5px;
+
+}
+
+footer {
+    width: 100%;
+    bottom: 0;
+    position: fixed;
+    left: 0;
+
+}
+
+nav {
+    background-color: white;
+    color: black;
+    box-shadow: 1px 3px 10px black;
+}
+
+
+li {
+    color: white;
+
+}
+
+.btn {
+    background-color: #162722;
+    margin-top: 30px;
+}
+
+.btn:hover {
+    background-color: #C0E8F9;
+}
+
+.page-footer {
+    background-color: #C8B8DB;
+}
+
+a {
+    color: #4B1B1B;
+}
+
+h1 {
+    font-size: 40px;
+    margin-top: 20px;
+}
+
+.card-title {
+    -webkit-text-stroke: .5px gray;
+}
